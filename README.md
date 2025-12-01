@@ -1,2 +1,2 @@
 # OnlineStoreCypres
-Automation tests Cypress + Javadcript
+Automation tests Cypress + JavaScript
