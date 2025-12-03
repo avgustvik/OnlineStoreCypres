@@ -33,7 +33,6 @@ Feature: Registration
         And Click on button Continue to start registration
         When User clicks on button Continue to continue a registration process
         Then field "<Field Name>" should have an error with the text "<Expected Error>"
-        And 
 
         Examples:
             | Field Name     | Expected Error                                                        |
