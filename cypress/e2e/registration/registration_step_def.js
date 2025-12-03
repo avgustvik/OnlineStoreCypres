@@ -98,3 +98,7 @@ Then('Welcome text is Welcome back {string}', function(ignoredPlaceholder) {
   const expectedFirstName = this.firstName;
   registrationPage.registration_validateFirstName(expectedFirstName);
 });
+
+Then('field {string} should have an error with the text {string}', (fieldName, expectedError) => {
+  registrationPage.registration_error(fieldName, expectedError);
+});

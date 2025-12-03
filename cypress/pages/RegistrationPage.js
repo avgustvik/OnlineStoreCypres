@@ -19,7 +19,7 @@ class RegistrationPage {
   regionField = "#AccountFrm_zone_id";
   zipCodeField = "#AccountFrm_postcode";
   countryField = "#AccountFrm_country_id";
-  loginName = "#AccountFrm_loginname";
+  loginNameField = "#AccountFrm_loginname";
   passwordField = "#AccountFrm_password";
   passwordConfirmField = "#AccountFrm_confirm";
   newsletterYes = 'input[type="radio"][value="1"]';
@@ -88,7 +88,7 @@ class RegistrationPage {
 
   registration_login_details_login() {
     const username = randomLogin();
-    cy.get(this.loginName).type(username);
+    cy.get(this.loginNameField).type(username);
     return username;
   }
 
@@ -117,6 +117,17 @@ class RegistrationPage {
       "contain.text",
       `Welcome back ${expectedFirstName}`
     );
+  }
+
+  registration_error(fieldName, expectedError) {
+    const selector = this[fieldName];
+    expect(selector, `No selector found for ${fieldName}`).to.be.ok;
+
+    cy.get(selector)
+      .closest('.form-group')
+      .find('.help-block')
+      .should('be.visible')
+      .and('contain.text', expectedError);
   }
 }
 

@@ -9,4 +9,3 @@ Then('User is redirected to {string} page', function(page) {
 Then('Header text is {string}', function(expectedText) {
   commonPage.hasHeaderText(expectedText)
 });
-
