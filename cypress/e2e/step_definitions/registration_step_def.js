@@ -1,9 +1,10 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import RegistrationPage from "../../pages/RegistrationPage";
+import CommonPage from "../../pages/CommonPage";
 import { randomFirstName, randomLastName, randomEmail, randomLogin } from "../../support/utils";
 
-
 const registrationPage = new RegistrationPage()
+
 Given('User navigates to Registration page', function () {
   registrationPage.goTo(Cypress.env('url') + "?rt=account/create");
 });
@@ -67,11 +68,12 @@ When('User selects country {string}', function (country) {
 
 When('User enters Login Name {string}', function () {
   const login = registrationPage.registration_login_details_login();
-  this.login = login 
+  Cypress.env('loginName', login);   
 });
 
 When('User enters a password {string}', function (password) {
   registrationPage.registration_login_details_password(password);
+  Cypress.env('password', password);   
 });
 
 When('User confirms a password {string}', function (confirmPassword) {
@@ -101,4 +103,8 @@ Then('Welcome text is Welcome back {string}', function(ignoredPlaceholder) {
 
 Then('field {string} should have an error with the text {string}', (fieldName, expectedError) => {
   registrationPage.registration_error(fieldName, expectedError);
+});
+
+Given('User is registered in the app', function () {
+  this.user = registrationPage.registration_user_is_registered();
 });

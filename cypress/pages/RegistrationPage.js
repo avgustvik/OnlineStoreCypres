@@ -4,6 +4,8 @@ import {
   randomFirstName,
   randomLastName,
 } from "../support/utils.js";
+import CommonPage from "./CommonPage";
+import { faker } from "@faker-js/faker";
 
 class RegistrationPage {
   registrationStartButton = 'button[type="submit"][title="Continue"]';
@@ -124,11 +126,49 @@ class RegistrationPage {
     expect(selector, `No selector found for ${fieldName}`).to.be.ok;
 
     cy.get(selector)
-      .closest('.form-group')
-      .find('.help-block')
-      .should('be.visible')
-      .and('contain.text', expectedError);
+      .closest(".form-group")
+      .find(".help-block")
+      .should("be.visible")
+      .and("contain.text", expectedError);
   }
+
+  // if we can registered user in background
+ registration_user_is_registered() {
+  const user = {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    email: faker.internet.email(),
+    address1: faker.location.streetAddress(),
+    city: faker.location.city(),
+    zipCode: faker.location.zipCode("#####"),
+    region: "Bristol", // must match actual <option> text
+    country: "United Kingdom",
+    loginName: faker.internet.username().replace(/\W/g, "").slice(0,10),
+    password: faker.internet.password({ length: 8 }),
+  };
+
+  Cypress.env("registeredUser", user);
+
+  cy.visit("?rt=account/create");
+  cy.get(this.registrationStartButton).click();
+  cy.get(this.firstNameField).type(user.firstName);
+  cy.get(this.lastNameField).type(user.lastName);
+  cy.get(this.emailField).type(user.email, { parseSpecialCharSequences: false });
+  cy.get(this.address1Field).type(user.address1);
+  cy.get(this.cityField).type(user.city);
+  cy.get(this.zipCodeField).type(user.zipCode);
+  cy.get(this.regionField).select(user.region);
+  cy.get(this.countryField).select(user.country);
+  cy.get(this.loginNameField).type(user.loginName);
+  cy.get(this.passwordField).type(user.password);
+  cy.get(this.passwordConfirmField).type(user.password);
+  cy.get(this.aceptPrivacyPolicy).check();
+  cy.get(this.continueRegistrationButton).click();
+
+  // return the plain object for later use
+  return user;
+}
+
 }
 
 export default RegistrationPage;
