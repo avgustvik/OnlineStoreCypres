@@ -33,3 +33,35 @@ Then("Alert message {string} should be shown", function (expectedMessage) {
     .should("be.visible")
     .and("contain.text", expectedMessage);
 });
+
+Then("Success alert message {string} should be shown", function (expectedMessage) {
+  loginPage.getAlertSuccess()
+    .should("be.visible")
+    .and("contain.text", expectedMessage);
+});
+
+
+When("User clicks on Forgot Password", function () {
+  loginPage.forgotPassword();
+});
+
+When("User enters a Login Name {string}", function (loginName) {
+  loginPage.forgotpassword_setLoginName(loginName);
+});
+
+When("User enters an email {string}", function (email) {
+  loginPage.forgotpassword_setEmail(email);
+});
+
+When("User clicks on Continue", function () {
+  loginPage.forgot_continue();
+});
+
+
+When("User clicks on Forgot Login", function () {
+  loginPage.forgotLogin();
+});
+
+When("User enters Last Name {string}", function (lastName) {
+  loginPage.forgotpassword_setLastname(lastName);
+});

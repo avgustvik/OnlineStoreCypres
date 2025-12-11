@@ -2,7 +2,6 @@ class CommonPage {
   
   top_menu = "#customer_menu_top";
   top_menu_options = ".sub_menu.dropdown-menu";
-  top_menu_option
   
   validateUrl(part) {
     cy.url().should("include", part);

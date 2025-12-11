@@ -23,5 +23,26 @@ Feature: Login
         When User clicks on button Login
         Then Alert message "Error: Incorrect login or password provided." should be shown
 
-#Scenario: forget password
-#Scenario: forget Login
+  @id:6
+    Scenario: Forgot password - happy path
+        Given User navigates to Login page
+        And User clicks on Forgot Password
+        When User enters a Login Name "Trevor"
+        And User enters an email "trevor@test.io"
+        And User clicks on Continue
+        Then Success alert message "Success: Password reset link has been sent to your e-mail address." should be shown
+
+  @id:7
+    Scenario: Forgot Login - happy path
+        Given User navigates to Login page
+        And User clicks on Forgot Login
+        When User enters Last Name "Trevor"
+        And User enters an email "trevor@test.io"
+        And User clicks on Continue
+        Then Success alert message "Success: Your login name reminder has been sent to your e-mail address." should be shown
+
+
+
+
+#Scenario: forget password - happy, empty login name, empty email
+#Scenario: forget Login - happy pass, empty last name, empty email
